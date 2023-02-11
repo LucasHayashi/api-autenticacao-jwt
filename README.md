@@ -4,7 +4,7 @@
 
 Este projeto implementa o fluxo de autenticação com JWT ( JSON Web Tokens ), em uma API de login e cadastro de usuários.
 
-Após realizar o cadastro, é necessário realizar o login para receber um token de autenticação para consumir a rota informacoes da API. Por padrão foi definido que o tempo de experiração do token é de 5 minutos, e após a expiração é necessário renová-lo.
+Após realizar o cadastro, é necessário realizar o login para receber um token de autenticação para consumir a rota informacoes da API. O tempo de expiração do token é de 5 minutos, e após este tempo é necessário fazer a renovação.
 
 ## Tecnologias
 
