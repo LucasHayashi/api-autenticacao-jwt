@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 app.use("/user", userRouter);
 
-app.use("/informacoes", verifyToken, (req, res) => {
+app.get("/informacoes", verifyToken, (req, res) => {
     let loggedUser = req.user.name;
     let expirationDate = new Date(req.user.exp * 1000).toLocaleString();
 
