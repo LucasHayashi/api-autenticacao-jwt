@@ -11,6 +11,8 @@ Após realizar o cadastro, é necessário realizar o login para receber um token
 - [Node JS](https://nodejs.org/en/)
 - [Express JS](https://expressjs.com/pt-br/)
 - [JWT](https://jwt.io/)
+- [MongoDB](https://www.mongodb.com/)
+- [Mongoose JS](https://mongoosejs.com/)
 
 ## Endpoints
 
