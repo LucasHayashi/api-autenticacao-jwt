@@ -77,3 +77,9 @@ curl --location --request GET 'https://api-autenticacao-jwt.onrender.com/informa
   "message": "Bem vindo, Lucas Hayashi. A sua sessão termina em 11/02/2023 01:34:07"
 }
 ```
+
+## Swagger UI
+
+Clique no link abaixo para testar a API no SwaggerHub
+
+>[Link da documentação](https://app.swaggerhub.com/apis-docs/LUCASHAYASHI5/autenticacao-com-jwt/1.0.0#)

@@ -19,10 +19,9 @@ userRouter.post("/login", async (req, res) => {
     if (req.body.email && req.body.password) {
         try {
             User.findOne({ email: req.body.email }, function (err, user) {
-                if (err) {
+                if (err || (!user)) {
                     return res.status(400).send({ error: "Usuário não encontrado" });
                 }
-
                 bcrypt.compare(req.body.password, user.password, function (err, isValid) {
                     if (err) {
                         return res.status(400).send({ error: err.message });
