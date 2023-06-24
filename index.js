@@ -2,7 +2,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import * as dotenv from 'dotenv'
 import userRouter from './controller/userController.js';
-import verifyToken from './controller/authController.js';
+import { verifyToken } from './controller/authController.js';
 dotenv.config()
 
 const app = express();

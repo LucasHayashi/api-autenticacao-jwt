@@ -1,10 +1,14 @@
-# API de cadastro e login com autenticação Jwt
+# API de Cadastro e Login com Autenticação JWT e Refresh Tokens
 
-## Sobre 
+## Sobre
+Esta API implementa o fluxo de autenticação utilizando JSON Web Tokens (JWT) e Refresh Tokens.
 
-Este projeto implementa o fluxo de autenticação com JWT ( JSON Web Tokens ), em uma API de login e cadastro de usuários.
-
-Após realizar o cadastro, é necessário realizar o login para receber um token de autenticação para consumir a rota informacoes da API. O tempo de expiração do token é de 5 minutos, e após este tempo é necessário fazer a renovação.
+## Funcionalidades
+- Cadastro de usuários.
+- Login para obter um token de autenticação e refresh token.
+- Logout baseado em tokens.
+- Renovação do token de autenticação utilizando Refresh Tokens.
+- Rota de Informações para testar o usuário logado.
 
 ## Tecnologias
 
@@ -13,20 +17,21 @@ Após realizar o cadastro, é necessário realizar o login para receber um token
 - [JWT](https://jwt.io/)
 - [MongoDB](https://www.mongodb.com/)
 - [Mongoose JS](https://mongoosejs.com/)
+- [Moment.js](https://momentjs.com/)
 
 ## Endpoints
 
 ### Registro
 
->**Método Http : POST** https://api-autenticacao-jwt.onrender.com/user/register
+>**Método Http : POST** /user/register
 
 ```sh
-curl --location --request POST 'https://api-autenticacao-jwt.onrender.com/user/register' \
+curl --location --request POST 'localhost:3200/user/register' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-  "name": "Lucas Hayashi",
-  "email": "teste@gmail.com",
-  "password": "Teste123@"
+	"name": "Lucas",
+	"email": "lucas@gmail.com",
+	"password": "Teste123"
 }'
 ```
 
@@ -40,14 +45,14 @@ curl --location --request POST 'https://api-autenticacao-jwt.onrender.com/user/r
 
 ### Login
 
->**Método Http : POST** https://api-autenticacao-jwt.onrender.com/user/login
+>**Método Http : POST** /user/login
 
 ```sh
-curl --location --request POST 'https://api-autenticacao-jwt.onrender.com/user/login' \
+curl --location --request POST 'localhost:3200/user/login' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-  "email": "teste1@gmail.com",
-  "password": "Teste123@"
+	"email": "lucas@gmail.com",
+	"password": "Teste123"
 }'
 ```
 
@@ -55,17 +60,59 @@ curl --location --request POST 'https://api-autenticacao-jwt.onrender.com/user/l
 
 ```sh
 {
-  "message": "Logado com sucesso!",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVjYXMgSGF5YXNoaSIsImVtYWlsIjoidGVzdGUxQGdtYWlsLmNvbSIsImlhdCI6MTY3NjA4OTc0NywiZXhwIjoxNjc2MDkwMDQ3fQ.E0zdPG9X7GJddb_z5Pw0SXH_LC31dKBCKKf53QYsIpQ"
+	"accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OTc3N2E3M2UxOTMyZjI1YmIyNGMyNyIsIm5hbWUiOiJMdWNhcyIsImVtYWlsIjoibHVjYXNAZ21haWwuY29tIiwiaWF0IjoxNjg3NjQ4MTk2LCJleHAiOjE2ODc2NDkwOTZ9.vfajqFSI5POuG6kZD92yWqkyXIX-jtap083-rqvKhzs",
+	"refreshToken": "9cb414ea60529523a1fd049569a1ceb779e299be03953bff"
+}
+```
+
+### Logout
+
+>**Método Http : POST** /user/logout
+
+```sh
+curl --location --request POST 'localhost:3200/user/logout' \
+--header 'Authorization: Bearer <token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"refreshToken": "9cb414ea60529523a1fd049569a1ceb779e299be03953bff"
+}'
+```
+
+### Response
+
+```sh
+{
+	"message": "Logout efetuado com sucesso!"
+}
+```
+
+### Refresh Token
+
+>**Método Http : POST** /user/refresh-token
+
+```sh
+curl --location --request POST 'localhost:3200/user/refresh-token' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"refreshToken": "9cb414ea60529523a1fd049569a1ceb779e299be03953bff"
+}'
+```
+
+### Response
+
+```sh
+{
+	"accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OTc3N2E3M2UxOTMyZjI1YmIyNGMyNyIsIm5hbWUiOiJMdWNhcyIsImVtYWlsIjoibHVjYXNAZ21haWwuY29tIiwiaWF0IjoxNjg3NjQ4MjUyLCJleHAiOjE2ODc2NDkxNTJ9.5xUaIsnQVoPQvNoYPg-p0wzLDrr0W4q7fbvVULlue-0",
+	"refreshToken": "e5f76fbfdc7fc62f90f7f6e0f3986d140421e3ce5d82b096"
 }
 ```
 
 ### Informações
 
->**Método Http : GET** https://api-autenticacao-jwt.onrender.com/informacoes
+>**Método Http : GET** /informacoes
 
 ```sh
-curl --location --request GET 'https://api-autenticacao-jwt.onrender.com/informacoes' \
+curl --location --request GET 'localhost:3200/informacoes' \
 --header 'Authorization: Bearer <token>' \
 --header 'Content-Type: application/json' \
 ```
@@ -74,7 +121,7 @@ curl --location --request GET 'https://api-autenticacao-jwt.onrender.com/informa
 
 ```sh
 {
-  "message": "Bem vindo, Lucas Hayashi. A sua sessão termina em 11/02/2023 01:34:07"
+	"message": "Bem vindo, Lucas. A sua sessão termina em 24/06/2023, 20:25:52"
 }
 ```
 
